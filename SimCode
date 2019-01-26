@@ -1,0 +1,80 @@
+import doodlepad.*;
+
+public class project01 {
+  //Field
+  public static Text player1;
+  public static Oval oval1, oval2, oval3, oval4, oval5, oval6;
+  public static Rectangle rectangle1;
+  public static double linex;
+  public static double liney;
+  public static int playerPlaying = 0;
+  public static int makeLine = 0;
+  public static void main(String [] args)
+
+  {
+
+  //creates 6 ovals at vertices of hexagon
+    oval1 = new Oval (200 + Math.cos(0)*100, 200 + Math.sin(0)*100, 10,10);
+    oval1.setFillColor (255, 255, 255);
+    oval1.setMousePressedHandler (project01::one);
+
+    oval2 = new Oval (200+ Math.cos(Math.PI/3)*100, 200 + Math.sin(Math.PI/3)*100, 10, 10);
+    oval2.setFillColor (255, 255, 255);
+    oval2.setMousePressedHandler (project01::one);
+
+    oval3 = new Oval (200+ Math.cos(Math.PI*2/3)*100, 200 + Math.sin(Math.PI*2/3)*100, 10, 10);
+    oval3.setFillColor (255, 255, 255);
+    oval3.setMousePressedHandler (project01::one);
+
+    oval4 = new Oval (200 + Math.cos(Math.PI)*100, 200 + Math.sin(Math.PI)*100, 10,10);
+    oval4.setFillColor (255,255,255);
+    oval4.setMousePressedHandler (project01::one);
+
+    oval5 = new Oval (200 + Math.cos(Math.PI*4/3)*100, 200 + Math.sin(Math.PI*4/3)*100, 10, 10);
+    oval5.setFillColor (255,255,255);
+    oval5.setMousePressedHandler (project01::one);
+
+    oval6 = new Oval (200 + Math.cos(Math.PI*5/3)*100, 200 + Math.sin(Math.PI*5/3)*100, 10,10);
+    oval6.setFillColor (255,255,255);
+    oval6.setMousePressedHandler (project01::one);
+
+    rectangle1 = new Rectangle(50, 50, 30, 30);
+    rectangle1.setFillColor(255,0,0);
+
+    //sets game's directions for players at the top
+    player1= new Text (" Player 1: Pick first dot ", 100, 100);
+
+}
+  //saves coordinates and creates line from saved coordinates
+  public static void one(Shape shp, double x, double y, int button) {
+    if (makeLine == 0) {
+    linex = x;
+    liney = y;
+    player1.setText (" Player " + (playerPlaying + 1) + ": Pick second dot ");
+    shp.setEventsEnabled (false);
+    shp.setFillColor(((playerPlaying+1)%2)*255, 0,playerPlaying*255);
+    }
+    else {
+      Line line1 = new Line (linex, liney, x, y);
+      line1.setStrokeColor(((playerPlaying+1)%2)*255, 0,playerPlaying*255);
+      line1.setEventsEnabled (false);
+      playerPlaying = (playerPlaying+1)%2;
+      rectangle1.setFillColor(((playerPlaying+1)%2)*255, 0,playerPlaying*255);
+      player1.setText (" Player " + (playerPlaying + 1) + ": Pick first dot ");
+      oval1.setEventsEnabled (true);
+      oval2.setEventsEnabled (true);
+      oval3.setEventsEnabled (true);
+      oval4.setEventsEnabled (true);
+      oval5.setEventsEnabled (true);
+      oval6.setEventsEnabled (true);
+      oval1.setFillColor (255, 255, 255);
+      oval2.setFillColor (255, 255, 255);
+      oval3.setFillColor (255, 255, 255);
+      oval4.setFillColor (255, 255, 255);
+      oval5.setFillColor (255, 255, 255);
+      oval6.setFillColor (255, 255, 255);
+    }
+    makeLine = (makeLine+1)%2;
+  }
+
+}
